@@ -1,0 +1,171 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="szczepanczykd" id="1">
+        <createTable tableName="instructors">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="instructors_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR"/>
+            <column name="surname" type="VARCHAR"/>
+            <column name="birth_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="description" type="VARCHAR"/>
+            <column name="image_url" type="VARCHAR"/>
+            <column name="active" type="BOOLEAN"/>
+            <column defaultValueComputed="now()" name="created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="szczepanczykd" id="2">
+        <createTable tableName="members">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="members_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR"/>
+            <column name="surname" type="VARCHAR"/>
+            <column name="email" type="VARCHAR"/>
+            <column name="image" type="oid"/>
+            <column name="birth_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="paid_until" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column defaultValueComputed="now()" name="created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="szczepanczykd" id="3">
+        <createTable tableName="exercises">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="exercises_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR"/>
+            <column name="description" type="VARCHAR"/>
+            <column defaultValueComputed="now()" name="created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="szczepanczykd" id="4">
+        <createTable tableName="meals">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="meals_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR"/>
+            <column name="description" type="VARCHAR"/>
+            <column name="type" type="VARCHAR"/>
+            <column defaultValueComputed="now()" name="created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="szczepanczykd" id="5">
+        <createTable tableName="plans">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="plans_pkey"/>
+            </column>
+            <column name="name" type="VARCHAR"/>
+            <column name="description" type="VARCHAR"/>
+            <column name="type" type="VARCHAR"/>
+            <column defaultValueComputed="now()" name="created_at" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="szczepanczykd" id="6">
+        <createTable tableName="exercises_plans">
+            <column name="plan_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="exercise_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="szczepanczykd" id="7">
+        <createTable tableName="meals_plans">
+            <column name="plan_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="meal_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="szczepanczykd" id="8">
+        <addForeignKeyConstraint baseColumnNames="plan_id" baseTableName="exercises_plans"
+                                 constraintName="fk_rails_2390e24a54" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="plans" validate="true"/>
+    </changeSet>
+    <changeSet author="szczepanczykd" id="9">
+        <addForeignKeyConstraint baseColumnNames="exercise_id" baseTableName="exercises_plans"
+                                 constraintName="fk_rails_2390e24a55" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="exercises" validate="true"/>
+    </changeSet>
+    <changeSet author="szczepanczykd" id="10">
+        <addForeignKeyConstraint baseColumnNames="plan_id" baseTableName="meals_plans"
+                                 constraintName="fk_rails_2390e24a56" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="plans" validate="true"/>
+    </changeSet>
+    <changeSet author="szczepanczykd" id="11">
+        <addForeignKeyConstraint baseColumnNames="meal_id" baseTableName="meals_plans"
+                                 constraintName="fk_rails_2390e24a57" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="meals" validate="true"/>
+    </changeSet>
+    <changeSet id="12" author="szczepanczykd">
+        <sql>
+            INSERT INTO instructors (id, name, surname, birth_date, description, image_url, active, created_at) VALUES (1, 'John', 'Enroll', NULL, 'Quite good instructor', 'https://content.jdmagicbox.com/comp/mumbai/q7/022pxx22.xx22.140719114604.v9q7/catalogue/be-fit-personal-trainer-at-home-vikhroli-west-mumbai-gym-personal-trainers-f69m.jpg?clr=666600', NULL, '2023-02-12 17:38:45.800429');
+            INSERT INTO instructors (id, name, surname, birth_date, description, image_url, active, created_at) VALUES (2, 'Michael', 'Sandare', NULL, 'Instructor with huge ambitions', 'https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco,dpr_1/v1402244946/sxkfby8oo6cu0i9vlda7.jpg', NULL, '2023-02-12 17:38:49.260994');
+            INSERT INTO instructors (id, name, surname, birth_date, description, image_url, active, created_at) VALUES (3, 'Maria', 'Atomowa', NULL, 'Your personal, best diet instructor', 'data:image/jpeg;base64,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', NULL, '2023-02-12 17:38:52.842251');
+        </sql>
+    </changeSet>
+    <changeSet id="13" author="szczepanczykd">
+        <sql>
+            insert into exercises (id, name, description, created_at) values (1, 'Brzuszki', 'Między udami a kolanami powinien być kąt prosty. Głowa, tułów i uda powinny tworzyć linię prostą. Dłonie położone na potylicy, nie splecione. Z wydechem zrób brzuszek aż odczujesz maksymalne spięcie mięśni brzucha, a następnie z wdechem wyprostuj tułów wracając do pozycji wyjściowej.',CURRENT_DATE);
+            insert into exercises (id, name, description, created_at) values (2, 'Pajacyki', 'Ćwiczenie to polega bowiem na rytmicznych podskokach oraz skoordynowanych rozkrokach i łączeniu nóg. Sytuacja wygląda podobnie w przypadku rąk.',CURRENT_DATE);
+            insert into exercises (id, name, description, created_at) values (3, 'Skłony', 'Najprostsze rozciągające ćwiczenie, polega na klasycznych skłonach tułowia w przód. W czasie ćwiczenia ważna jest technika oddychania. Wydech następuje podczas ruchu ramion, a przy powrocie do pozycji wyjściowej jest wdech.',CURRENT_DATE);
+        </sql>
+    </changeSet>
+    <changeSet id="14" author="szczepanczykd">
+        <sql>
+            INSERT INTO plans(id, name, description, type, created_at) VALUES (1, 'Trening Podstawowy', 'Trening dla każdego na rozgrzewkę przed poważniejszymi ćwiczeniami.', 'T', CURRENT_DATE);
+        </sql>
+    </changeSet>
+    <changeSet id="15" author="szczepanczykd">
+        <sql>
+            INSERT INTO exercises_plans(plan_id, exercise_id) VALUES (1, 1);
+            INSERT INTO exercises_plans(plan_id, exercise_id) VALUES (1, 2);
+            INSERT INTO exercises_plans(plan_id, exercise_id) VALUES (1, 3);
+        </sql>
+    </changeSet>
+    <changeSet id="16" author="szczepanczykd">
+        <sql>
+            insert into exercises (id, name, description, created_at) values (4, 'Wyciskanie sztangi na ławce poziomej', 'Utrzymując prawidłową pozycję wyjściową, wykonaj wdech i powolnym ruchem opuść sztangę do środkowej części klatki piersiowej, uginając ramiona w łokciach. 2) Po przytrzymaniu sztangi w okolicach klatki przez ułamek sekundy zacznij unosić sztangę z powrotem do pozycji wyjściowej, wykonując wydech powietrza.',CURRENT_DATE);
+            insert into exercises (id, name, description, created_at) values (5, 'Uginanie przedramion z hantlami', '1) Pozycja stojąca. 2) Ramiona ułożone wzdłuż ciała, brzuch i pośladki napięte. 3) Hantle w dłoniach w pozycji neutralnej – kciuki skierowane w przód.',CURRENT_DATE);
+            insert into exercises (id, name, description, created_at) values (6, 'Przysiad ze sztangą trzymaną na plecach', 'Ruch 1) Utrzymując prawidłową pozycję wyjściową i naturalną krzywiznę kręgosłupa, wykonaj płynny i powolny przysiad do pozycji mniej więcej kąta prostego, wraz z powolnym wdechem powietrza. 2) Wykonując wydech, wstań do pozycji wyjściowej. Nie wykonuj przeprostu w stawach kolanowych. 3) Wykonaj wyznaczoną liczbę powtórzeń. Wskazówki 1) Pamiętaj o prostych plecach oraz odcinku lędźwiowym. 2) Kontroluj ruch siadu. 3) Nie bujaj tułowiem (trzymaj stabilnie w jednej linii). 4) Głowa w równej linii z plecami. 5) Wzrok skieruj przed siebie (ew. lekko do góry). 6) Nie wykonuj kociego grzbietu. 7) Nie wykonuj przeprostu w kolanach. 8) Bądź skoncentrowany. 9) Nie prowadź kolan do wewnątrz (utrzymuj je skierowane lekko na zewnątrz). 10) Ciężar rozłóż równomiernie na całej stopie.', CURRENT_DATE);
+        </sql>
+    </changeSet>
+    <changeSet id="17" author="szczepanczykd">
+        <sql>
+            INSERT INTO plans(id, name, description, type, created_at) VALUES (2, 'Trening Zaawansowany', 'Trening po zakończeniu planu podstawowego.', 'T', CURRENT_DATE);
+        </sql>
+    </changeSet>
+    <changeSet id="18" author="szczepanczykd">
+        <sql>
+            INSERT INTO exercises_plans(plan_id, exercise_id) VALUES (2, 1);
+            INSERT INTO exercises_plans(plan_id, exercise_id) VALUES (2, 3);
+            INSERT INTO exercises_plans(plan_id, exercise_id) VALUES (2, 4);
+            INSERT INTO exercises_plans(plan_id, exercise_id) VALUES (2, 5);
+            INSERT INTO exercises_plans(plan_id, exercise_id) VALUES (2, 6);
+        </sql>
+    </changeSet>
+    <changeSet id="19" author="szczepanczykd">
+        <sql>
+            INSERT INTO members(id, name, surname, email, image, birth_date, paid_until, created_at) VALUES (1, '8d708e95-a350-4067-a682-878beccef592', 'test', 'test@example.com', null, CURRENT_DATE, CURRENT_DATE, CURRENT_DATE);
+        </sql>
+    </changeSet>
+</databaseChangeLog>
